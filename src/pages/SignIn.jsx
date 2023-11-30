@@ -4,9 +4,15 @@ import * as Yup from 'yup'
 
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { signInFailure,signInStart,signInSuccess } from '../redux/user/userSlice'
+
 function SignIn() {
 
+  const {loading,error} = useSelector((state)=> state.user)
+
  let navigate = useNavigate()
+ let dispatch = useDispatch()
   
   const UserSchema = Yup.object().shape({
     
@@ -17,6 +23,7 @@ function SignIn() {
 
  const handleAddUser = async(values)=>{
   try {
+    dispatch(signInStart())
     const res = await fetch('api/auth/signin',{
       method:'post',
       headers: {
@@ -27,9 +34,10 @@ function SignIn() {
     const data = await res.json()
     
     
-    if(res.status===200)
+    if(res.status===200)    
     {
-      toast.success('User Created Successfully')
+      toast.success('User Login Successfully')
+      dispatch(signInSuccess(data))
       navigate('/')
     }
     else if(res.status ===404) {
@@ -40,6 +48,7 @@ function SignIn() {
     }
   } catch (error) {
     console.log(error)
+    dispatch(signInFailure(error.message))
       toast.error("Error Occoured")
   }
 }

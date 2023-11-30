@@ -78,3 +78,7 @@ git remote add origin https://github.com/anbuleo/mern_realEstate.git
  add a react icons by install 
   npm i react-icons
  
+ npm install @reduxjs/toolkit react-redux
+
+ for creating store 
+ 
