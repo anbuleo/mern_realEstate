@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
+import OAuth from '../components/OAuth'
 function SignUp() {
 
  let navigate = useNavigate()
@@ -58,6 +59,7 @@ function SignUp() {
           <input type="password" placeholder='Password' className='border p-3 rounded-lg ' id='password' name='password' onBlur={handleBlur} onChange={handleChange}/>
           {errors.password && touched.password ? <div style={{color : 'red'}}>{errors.password}</div>:null}
           <button type='submit' className='bg-yellow-900 text-white uppercase rounded-lg p-3 hover:opacity-95 disabled:opacity-75'>Sign up</button>
+          <OAuth />
         </form>
         )}
       
