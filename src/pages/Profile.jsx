@@ -14,6 +14,7 @@ import { toast } from "react-toastify"
   signOutUserFailure,
   signOutUserSuccess,} from '../redux/user/userSlice.js'
   import { useDispatch } from 'react-redux';
+import { Link } from "react-router-dom"
 
 
 
@@ -174,6 +175,7 @@ let dispatch = useDispatch()
         <input onChange={handleChange} defaultValue={currentUser.email} id="email" type="email"  placeholder="Email" className="border p-3 rounded-lg"/>
         <input onChange={handleChange} id="password" type="password"  placeholder="Password" className="border p-3 rounded-lg"/>
         <button className="bg-yellow-800 p-3 rounded-lg uppercase text-white hover:opacity-95 disabled:opacity-75 "  >Update</button>
+        <Link className= "hover:opacity-75 uppercase text-center text-white text-sm bg-green-600 p-3 rounded-lg" to={'/createListing'}>create listing</Link>
       </form>  
       <div className="flex justify-between mt-5">
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>
