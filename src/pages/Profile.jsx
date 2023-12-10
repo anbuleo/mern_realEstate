@@ -25,7 +25,9 @@ axios.defaults.baseURL = URL
 
 function Profile() {
   
-  let fileRef = useRef(null)
+  
+  
+  
   const {currentUser} = useSelector(state => state.user)
   const [file,setFile] = useState(undefined)
   const [filePercentage, setFilePercentage]=useState(0)
