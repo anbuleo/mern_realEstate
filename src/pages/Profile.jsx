@@ -34,6 +34,8 @@ function Profile() {
 const [fileUploadError, setFileUploadError]=useState(false)
 const [formData, setFormData] = useState({})
 const [updateSuccess, setUpdateSuccess] = useState(false);
+const [userListing, setUserListing] = useState([])
+console.log(userListing)
 let dispatch = useDispatch()
 
   // console.log(filePercentage,formData)
@@ -164,6 +166,25 @@ let dispatch = useDispatch()
   // request.resource.size < 2 * 1024 * 1024 && 
   // request.resource.contentType.matches('image/.*')
 
+  let handleShowListings = async()=>{
+      try {
+        let res = await fetch(`/api/user/listing/${currentUser._id}`)
+        const data = await res.json()
+        console.log(data)
+        setUserListing(data)
+        if(data.status ===200){
+          toast.success('User List data fetched successfully')
+          
+        }else if(data.success === false){
+          toast.error('Error occured')
+        }
+        
+
+      } catch (error) {
+        toast.error('Error occured')        
+      }
+  }
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>  
@@ -183,6 +204,23 @@ let dispatch = useDispatch()
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>
         <span onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign out</span>
       </div>  
+      <button onClick={handleShowListings} className="text-green-700 w-full">Show your Post-listing</button>
+      {userListing && userListing.length >0 && 
+       <div className="flex flex-col gap-4">
+        <h1 className="text-center mt-7 text-2xl">Your Listing</h1>
+     { userListing.map((e,i)=>{
+        return <div key={i} className="border flex p-3 rounded-lg justify-between items-center gap-4">
+          <Link to={`/listing/${e._id}`}>
+            <img src={e.imageUrls[0]} alt="listing cover" className="w-16 h-16 object-contain rounded-lg" />
+          </Link>
+          <Link className="text-slate-700 truncate flex-1 font-semibold hover:underline" to={`/listing/${e._id}`}><p>{e.name}</p></Link>
+          <div className="flex flex-col items-center">
+            <button className="uppercase text-red-700 ">delete</button>
+            <button className="uppercase text-green-700 ">edit</button>
+          </div>
+        </div>
+      })}
+      </div>}
     </div>
     
   )

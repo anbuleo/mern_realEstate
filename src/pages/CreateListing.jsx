@@ -12,7 +12,7 @@ function CreateListing() {
   const navigate = useNavigate();
    let [files, setFiles] = useState([])
    let [formData, setFormData] = useState({
-    ImageUrls : [],
+    imageUrls : [],
     name : '',
     description : '',
     address : '',
@@ -46,8 +46,9 @@ let handleSubmitImages =(e)=>{
             Promise.all(promises).then((urls)=>{
                 setFormData({
                     ...formData,
-                    ImageUrls : formData.ImageUrls.concat(urls)
+                    imageUrls : formData.imageUrls.concat(urls)
                 })
+                console.log(formData)
                 setImageUploadError(false)
             })
             .catch((err)=>{
@@ -123,7 +124,7 @@ let handleSave = async (e) => {
     e.preventDefault()
     try {
         
-        if (formData.ImageUrls.length < 1)
+        if (formData.imageUrls.length < 1)
         return setError('You must upload at least one image');
       if (+formData.regularPrice < +formData.discountPrice)
         return setError('Discount price must be lower than regular price');
@@ -225,7 +226,7 @@ let handleSave = async (e) => {
                     <button type='button' onClick={handleSubmitImages} className='p-3 text-green-700 border rounded-lg border-green-700 uppercase hover:shadow-lg disabled:opacity-80'>Upload</button>
                 </div>
                 {
-                    formData.ImageUrls.length >0 && formData.ImageUrls.map((url,i)=>{
+                    formData.imageUrls.length >0 && formData.imageUrls.map((url,i)=>{
                        return <div key={i} className="flex justify-between p-3 border items-center">
                             <img src={url} alt="Listing image" className='w-20 h-20 object-contain rounded-lg' />
                             <button onClick={()=>handleDeleteImage(i)} type='button' className='p-3 bg-red-700 text-white rounded-lg uppercase hover:opacity-75' >Delete</button>
