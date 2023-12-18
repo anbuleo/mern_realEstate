@@ -168,7 +168,7 @@ let dispatch = useDispatch()
     <div className="p-3 max-w-lg mx-auto">
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>  
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <input onChange={(e)=>setFile(e.target.files[0])} type="file" accept="image/*" hidden ref={fileRef} />
+        <input onChange={(e)=>setFile(e.target.files[0])} type="file" accept="image/*" hidden  />
         <img onClick={()=>fileRef.current.click()} src={formData.avatar || currentUser.avatar} alt="profile" loading="lazy" className="rounded-full h-24 w-24 object-cover self-center mt-2"/>
         <p className="text-center text-sm">
           {fileUploadError ? (<span className="text-red-700">Error image Upload (image must be 2 mb)</span>): filePercentage >0 && filePercentage <100 ?(<span className="text-slate-700">{`Uploading ${filePercentage}%`}</span>) : filePercentage === 100 ? (<span className="text-green-700"> Image successfully Uploaded</span>) : '' }
@@ -177,7 +177,7 @@ let dispatch = useDispatch()
         <input onChange={handleChange} defaultValue={currentUser.email} id="email" type="email"  placeholder="Email" className="border p-3 rounded-lg"/>
         <input onChange={handleChange} id="password" type="password"  placeholder="Password" className="border p-3 rounded-lg"/>
         <button className="bg-yellow-800 p-3 rounded-lg uppercase text-white hover:opacity-95 disabled:opacity-75 "  >Update</button>
-        <Link className= "hover:opacity-75 uppercase text-center text-white text-sm bg-green-600 p-3 rounded-lg" to={'/createListing'}>create listing</Link>
+        <Link className= "hover:opacity-75 uppercase text-center text-white text-sm bg-green-600 p-3 rounded-lg" to={'/create-listing'}>create listing</Link>
       </form>  
       <div className="flex justify-between mt-5">
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>
