@@ -25,7 +25,7 @@ function ListIng() {
     fetchListing()
     console.log(slisting)
   },[])
-  console.log(slisting)
+  // console.log(slisting)
   return (
     <main>
       
