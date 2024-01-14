@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 
 import { toast } from 'react-toastify'
 import { app } from '../firebase'
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function CreateListing() {
+function UpadateListing() {
+
     const { currentUser } = useSelector((state) => state.user);
+    let params = useParams()
 
   const navigate = useNavigate();
    let [files, setFiles] = useState([])
@@ -34,7 +36,23 @@ function CreateListing() {
    let [error,setError] = useState(false)
    
    
-  
+  useEffect(()=>{
+    const getListing = async ()=>{
+        const ListingId = params.listingId
+        const res = await fetch(`/api/listing/getListing/${ListingId}`)
+        const data = await res.json()
+       let listData = data.listing
+       if(listData){
+        toast.success(data.message)
+       }
+       setFormData(listData)
+    //     console.log(data.listing)
+        
+        // console.log(ListingId)
+    }
+
+    getListing()
+  },[])
 
 let handleSubmitImages =(e)=>{
         if(files.length > 0 && files.length < 7) {
@@ -132,7 +150,7 @@ let handleSave = async (e) => {
       
         setError(false);
         
-        const res = await fetch('/api/listing/create', {
+        const res = await fetch(`/api/listing/update/${params.listingId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -143,8 +161,9 @@ let handleSave = async (e) => {
             }),
           });
           const data = await res.json();
-          if(res.status === 201){
-            toast.success('Created Successfully')
+          console.log(res.status)
+          if(res.status === 200){
+            toast.success('Updated Successfully')
           }
           
          
@@ -153,8 +172,7 @@ let handleSave = async (e) => {
             setError(data.message);
             toast.error('Error occured')
           }
-          console.log(data,typeof(data))
-          navigate(`/listing/${data.listing._id}`);
+          navigate(`/listing/${data._id}`);
 
 
 
@@ -169,7 +187,7 @@ let handleSave = async (e) => {
 }
   return (
     <main className='p-3 max-w-4xl mx-auto'>
-        <h1 className='text-3xl font-semibold text-center my-7'>Create Listing</h1>
+        <h1 className='text-3xl font-semibold text-center my-7'>Update Listing</h1>
         <form onSubmit={handleSave}  className='flex flex-col sm:flex-row gap-4'>
             <div className="flex flex-col gap-4 flex-1">
                 <input className='p-3 border rounded-lg ' onChange={handleChange} value={formData.name} placeholder='Name' type="text" id='name' maxLength='60' minLength='3' required />
@@ -234,7 +252,7 @@ let handleSave = async (e) => {
                         </div>
                     })
                 }
-                <button disabled={loading} className='p-3 bg-yellow-500 rounded-lg text-white uppercase hover:opacity-95 disabled:opacity-75 hover:shadow-lg'>Create Listing</button>
+                <button disabled={loading} className='p-3 bg-yellow-500 rounded-lg text-white uppercase hover:opacity-95 disabled:opacity-75 hover:shadow-lg'>Update Listing</button>
             </div>
             
         </form>
@@ -242,4 +260,4 @@ let handleSave = async (e) => {
   )
 }
 
-export default CreateListing
+export default UpadateListing

@@ -35,7 +35,7 @@ const [fileUploadError, setFileUploadError]=useState(false)
 const [formData, setFormData] = useState({})
 const [updateSuccess, setUpdateSuccess] = useState(false);
 const [userListing, setUserListing] = useState([])
-console.log(userListing)
+// console.log(userListing)
 let dispatch = useDispatch()
 
   // console.log(filePercentage,formData)
@@ -82,7 +82,7 @@ let dispatch = useDispatch()
     setFormData({...formData, [e.target.id]: e.target.value})
 
   }
-  console.log(formData)
+  // console.log(formData)
   const handleSubmit = async(e)=>{
     e.preventDefault();
     try {
@@ -184,6 +184,33 @@ let dispatch = useDispatch()
         toast.error('Error occured')        
       }
   }
+  let deleteListing = async(id) => {
+    console.log(id)
+    try {
+      let res = await fetch(`api/listing/deletelist/${id}`,{
+        method : 'DELETE'
+      })
+      const data = await res.json()
+    
+      if(data.success === false){
+        toast.error(data.message)
+        return
+      }
+      setUserListing((prev)=> prev.filter((e)=>e._id !== id))
+      toast.success('Deleted SuccessFully')
+    } catch (error) {
+      
+      toast.error(error.message)
+    }
+    
+    // const data = await res.json()
+    // console.log(data)
+    // let nw =userListing
+    // let mnw = nw.filter((e)=>e !== e[id])
+
+ 
+    // console.log(mnw)
+  }
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -215,14 +242,17 @@ let dispatch = useDispatch()
           </Link>
           <Link className="text-slate-700 truncate flex-1 font-semibold hover:underline" to={`/listing/${e._id}`}><p>{e.name}</p></Link>
           <div className="flex flex-col items-center">
-            <button className="uppercase text-red-700 ">delete</button>
+            <button onClick={()=>deleteListing(e._id)} className="uppercase text-red-700 ">delete</button>
+            <Link to={`/update-listing/${e._id}`}>
             <button className="uppercase text-green-700 ">edit</button>
+            </Link>
           </div>
         </div>
       })}
       </div>}
     </div>
     
+
   )
 }
 
