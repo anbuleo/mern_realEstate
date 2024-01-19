@@ -107,7 +107,8 @@ function ListIng() {
             </button>
               )
             }
-             {contact && <Contact listing={slisting} />}
+             {contact && <Contact listing={slisting} /> }
+             
       </div>
       </div>
       )
