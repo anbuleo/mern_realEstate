@@ -20,6 +20,7 @@ function Header() {
         if (searchTermFromUrl) {
           setSearchTerm(searchTermFromUrl);
         }
+        console.log(currentUser)
       }, [location.search]);
   return (
     <header className='bg-yellow-400 shadow-md'>
@@ -40,6 +41,13 @@ function Header() {
             <button><FaSearch className='text-stone-600' /></button>
         </form>
         <ul className="flex gap-4">
+            {
+                currentUser?.role==='admin' && (
+                    <Link to={'/adminlog'}>
+            <li className="  text-stone-600 hover:text-stone-950 cursor-pointer">Admin</li>
+            </Link>
+                )
+            }
             <Link to={'/'} >
             <li className="hidden sm:inline text-stone-600 hover:text-stone-950 cursor-pointer">Home</li>
             </Link>

@@ -7,6 +7,7 @@ import {toast} from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { signInFailure,signInStart,signInSuccess } from '../redux/user/userSlice'
 import OAuth from '../components/OAuth'
+import { generateOTP } from '../common/common'
 
 function SignIn() {
 
@@ -34,12 +35,22 @@ function SignIn() {
     })
     const data = await res.json()
     
-    
+    console.log(data)
+    let subject ={subject:'Signup your account'}
+    let otpVlaues = {
+      email:data.email,
+      message:'',
+      ref:data._id,
+      otpcode:'',
+      role:data.role
+  }
     if(res.status===200)    
     {
-      toast.success('User Login Successfully')
-      dispatch(signInSuccess(data))
-      navigate('/')
+      generateOTP(data.username,subject,otpVlaues)
+      navigate(`/otpauth/${data._id}`)
+      toast.success('otp send Successfully')
+      // dispatch(signInSuccess(data))
+     
     }
     else if(res.status ===404) {
       toast.error('Email Not Found!')

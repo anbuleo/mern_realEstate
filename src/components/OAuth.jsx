@@ -3,14 +3,17 @@ import { app } from '../firebase'
 import { useDispatch } from 'react-redux'
 import { signInSuccess } from '../redux/user/userSlice'
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { generateOTP } from '../common/common'
 
 
 function OAuth() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
+  
     const handleGoogleClick = async()=>{
        
-       
+      
     
         try {
            
@@ -32,8 +35,26 @@ function OAuth() {
                 })
             })
             const data = await res.json()
-            dispatch(signInSuccess(data))
-            navigate('/');
+            console.log(data)
+            let subject ={subject:'Login your account'}
+           
+                if(data.email){
+                    let otpVlaues = {
+                        email:data.email,
+                        message:'',
+                        ref:data._id,
+                        otpcode:''
+                    }
+                    // console.log(`${data.username},${subject},${otpVlaues}`)
+                   generateOTP(data.username,subject,otpVlaues)
+                     
+                    navigate(`/otpauth/${data._id}`);
+                   
+
+                }
+          
+           
+           
         } catch (error) {
             console.log('could not sign in with google', error)
         }

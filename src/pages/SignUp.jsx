@@ -5,6 +5,8 @@ import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
 import OAuth from '../components/OAuth'
+import { generateOTP } from '../common/common'
+import {getUser} from '../common/common.js'
 function SignUp() {
 
  let navigate = useNavigate()
@@ -14,23 +16,40 @@ function SignUp() {
     email : Yup.string().email('Invalid Email').required('* Required'),
     password : Yup.string().required('* Required').min(6,'Atlest 6 characters')
   })
-
+  
 
  const handleAddUser = async(values)=>{
+  console.log(values)
   try {
-    const res = await fetch('api/auth/signup',{
+    const res = await fetch('/api/auth/signup',{
       method:'post',
       headers: {
         'content-type' : 'application/json',
       },
       body: JSON.stringify(values)
     })
-    const data = await res.json()
-    
+    // const data = await res.json()
+    console.log(res.status)
+    let username = values.username
+    let subject ={subject:'Signup your account'}
     if(res.status===201)
     {
+     let user = await getUser({username})
+     console.log(user)
+    let otpVlaues = {
+      email:user.data.email,
+      message:'',
+      ref:user.data._id,
+      otpcode:''
+  }
+  // console.log(`${data.username},${subject},${otpVlaues}`)
+ generateOTP(username,subject,otpVlaues)
+      // generateOTP(data.user.username)
       toast.success('User Created Successfully')
-      navigate('/sign-in')
+      if(user){
+        navigate(`/otpauth/${user.data._id}`)
+        toast.success('Check your email for otp')
+      }
     }
   } catch (error) {
       toast.error("Error Occoured")
