@@ -42,9 +42,9 @@ function Charts() {
   da.push({id: `${key}`, Value:Number(`${value}`)})
     
  }
- if(da){
-  console.log(da)
- }
+//  if(da){
+//   console.log(da)
+//  }
   
   }
   

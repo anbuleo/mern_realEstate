@@ -18,6 +18,7 @@ import {
 import Contact from '../components/Contact'
  
 function ListIng() {
+  let url = import.meta.env.VITE_API_URL
   SwiperCore.use([Navigation])
   const params = useParams()
   const [slisting, setListing] = useState(null)
@@ -27,7 +28,7 @@ function ListIng() {
   useEffect(()=>{
     const fetchListing = async()=>{
       // console.log(params.listingId)
-      const res = await fetch(`/api/listing/getListing/${params.listingId}`)
+      const res = await fetch(`${url}/listing/getListing/${params.listingId}`)
       const data = await res.json()
       if(data.success === false){
         toast.error('Unable to Fetch data')

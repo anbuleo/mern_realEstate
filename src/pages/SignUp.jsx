@@ -8,7 +8,7 @@ import OAuth from '../components/OAuth'
 import { generateOTP } from '../common/common'
 import {getUser} from '../common/common.js'
 function SignUp() {
-
+  let url = import.meta.env.VITE_API_URL
  let navigate = useNavigate()
   
   const UserSchema = Yup.object().shape({
@@ -21,7 +21,7 @@ function SignUp() {
  const handleAddUser = async(values)=>{
   // console.log(values)
   try {
-    const res = await fetch('/api/auth/signup',{
+    const res = await fetch(`${url}/auth/signup`,{
       method:'post',
       headers: {
         'content-type' : 'application/json',

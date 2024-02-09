@@ -21,12 +21,12 @@ function SignIn() {
     email : Yup.string().email('Invalid Email').required('* Required'),
     password : Yup.string().required('* Required').min(6,'Atlest 6 characters')
   })
-
+let url = import.meta.env.VITE_API_URL
 
  const handleAddUser = async(values)=>{
   try {
     dispatch(signInStart())
-    const res = await fetch('api/auth/signin',{
+    const res = await fetch(`${url}/auth/signin`,{
       method:'post',
       headers: {
         'content-type' : 'application/json',

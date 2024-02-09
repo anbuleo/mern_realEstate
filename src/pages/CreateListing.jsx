@@ -119,6 +119,7 @@ let handleChange = (e) => {
 
 }
 // console.log(formData)
+let url = import.meta.env.VITE_API_URL
 
 let handleSave = async (e) => {
     e.preventDefault()
@@ -132,7 +133,7 @@ let handleSave = async (e) => {
       
         setError(false);
         
-        const res = await fetch('/api/listing/create', {
+        const res = await fetch(`${url}/listing/create`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

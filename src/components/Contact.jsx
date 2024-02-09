@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function Contact({listing}) {
+    let url = import.meta.env.VITE_API_URL
     const [owner, setOwner] = useState(null)
     const [message , setMessage] = useState('')
 
@@ -13,7 +14,7 @@ function Contact({listing}) {
     useEffect(()=>{
         const fetchOwner = async()=>{
             try {
-                const res = await fetch(`/api/user/${listing.userRef}`)
+                const res = await fetch(`${url}/user/${listing.userRef}`)
                 let data = await res.json()
                 
                 setOwner(data)

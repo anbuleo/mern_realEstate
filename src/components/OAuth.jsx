@@ -10,6 +10,7 @@ import { generateOTP } from '../common/common'
 function OAuth() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    let url = import.meta.env.VITE_API_URL
   
     const handleGoogleClick = async()=>{
        
@@ -22,7 +23,7 @@ function OAuth() {
            
     
             const result =await signInWithPopup(auth,provider)
-            const res = await fetch('/api/auth/google',{
+            const res = await fetch(`${url}/auth/google`,{
                 method : 'POST',
     
                 headers : {

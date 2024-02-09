@@ -26,7 +26,7 @@ axios.defaults.baseURL = URL
 function Profile() {
   
   
-  
+  let url = import.meta.env.VITE_API_URL
   
   const {currentUser} = useSelector(state => state.user)
   const [file,setFile] = useState(undefined)
@@ -88,7 +88,7 @@ let dispatch = useDispatch()
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`${url}/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,7 +118,7 @@ let dispatch = useDispatch()
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`${url}/user/delete/${currentUser._id}`, {
         method: 'DELETE'
       });
       
@@ -144,7 +144,7 @@ let dispatch = useDispatch()
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart())
-      const res = await fetch('/api/auth/signout')
+      const res = await fetch(`${url}/auth/signout`)
       const data = await res.json()
 
       if(data.success === false){
@@ -169,7 +169,7 @@ let dispatch = useDispatch()
 
   let handleShowListings = async()=>{
       try {
-        let res = await fetch(`/api/user/listing/${currentUser._id}`)
+        let res = await fetch(`${url}/user/listing/${currentUser._id}`)
         const data = await res.json()
         // console.log(data)
         setUserListing(data)
@@ -188,7 +188,7 @@ let dispatch = useDispatch()
   let deleteListing = async(id) => {
     // console.log(id)
     try {
-      let res = await fetch(`api/listing/deletelist/${id}`,{
+      let res = await fetch(`${url}/listing/deletelist/${id}`,{
         method : 'DELETE'
       })
       const data = await res.json()

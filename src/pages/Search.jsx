@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ListingItem from '../components/ListingItem';
 
 function Search() {
+  let url = import.meta.env.VITE_API_URL
     const navigate = useNavigate();
     const [sidebardata, setSidebardata] = useState({
       searchTerm: '',
@@ -52,7 +53,7 @@ function Search() {
         setLoading(true);
         setShowMore(false);
         const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/listing/getlistings?${searchQuery}`);
+        const res = await fetch(`${url}/listing/getlistings?${searchQuery}`);
         const data = await res.json();
         if (data.length > 8) {
           setShowMore(true);
@@ -120,7 +121,7 @@ function Search() {
       const urlParams = new URLSearchParams(location.search);
       urlParams.set('startIndex', startIndex);
       const searchQuery = urlParams.toString();
-      const res = await fetch(`/api/listing/get?${searchQuery}`);
+      const res = await fetch(`${url}/listing/get?${searchQuery}`);
       const data = await res.json();
       if (data.length < 9) {
         setShowMore(false);

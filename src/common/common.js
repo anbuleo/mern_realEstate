@@ -4,7 +4,7 @@ import axios from 'axios'
 let URL = import.meta.env.VITE_API_URL
 
 axios.defaults.baseURL = URL
-console.log(URL)
+// console.log(URL)
 
 export const getUser = async({username})=>{
     try {

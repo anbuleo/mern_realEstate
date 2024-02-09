@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function UpadateListing() {
-
+    let url = import.meta.env.VITE_API_URL
     const { currentUser } = useSelector((state) => state.user);
     let params = useParams()
 
@@ -39,7 +39,7 @@ function UpadateListing() {
   useEffect(()=>{
     const getListing = async ()=>{
         const ListingId = params.listingId
-        const res = await fetch(`/api/listing/getListing/${ListingId}`)
+        const res = await fetch(`${url}/listing/getListing/${ListingId}`)
         const data = await res.json()
        let listData = data.listing
        if(listData){
@@ -150,7 +150,7 @@ let handleSave = async (e) => {
       
         setError(false);
         
-        const res = await fetch(`/api/listing/update/${params.listingId}`, {
+        const res = await fetch(`${url}/listing/update/${params.listingId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
