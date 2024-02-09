@@ -5,6 +5,10 @@ import 'swiper/css/bundle'
 import {Navigation} from 'swiper/modules'
 import SwiperCore from 'swiper'
 import ListingItem from '../components/ListingItem'
+import axios from 'axios'
+let URL = import.meta.env.VITE_API_URL
+
+axios.defaults.baseURL = URL
 function Home() {
   const [offerListings, setOfferListings] = useState([])
   const [ saleListings, setSaleListings] = useState([])
@@ -14,9 +18,10 @@ function Home() {
   useEffect(()=>{
     const fetchOfferListing = async()=>{
       try {
-        const res = await fetch('/api/listing/getlistings?offer=true&limit=4')
-        let data =await res.json()
-        setOfferListings (data)
+        const res = await axios.get('/listing/getlistings?offer=true&limit=4')
+        // let data =await res.json()
+        // console.log(res)
+        setOfferListings (res.data)
         // console.log(offerListings)
         fetchRentListings()
       } catch (error) {
@@ -25,9 +30,9 @@ function Home() {
     }
     const fetchRentListings = async()=>{
       try {
-        const res = await fetch('/api/listing/getlistings?type=rent&limit=4')
-        let data = await res.json()
-        setRentListings(data)
+        const res = await axios.get('/listing/getlistings?type=rent&limit=4')
+        // let data = await res.json()
+        setRentListings(res.data)
         fetchSaleListings()
       } catch (error) {
         console.log(error)
@@ -35,9 +40,9 @@ function Home() {
     }
     const fetchSaleListings = async() =>{
       try {
-        const res = await fetch('/api/listing/getlistings?type=sale&limit=4')
-        let data = await res.json()
-        setSaleListings(data)
+        const res = await axios.get('/listing/getlistings?type=sale&limit=4')
+        // let data = await res.json()
+        setSaleListings(res.data)
 
       } catch (error) {
         console.log(error)

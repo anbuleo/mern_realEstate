@@ -10,7 +10,7 @@ function Charts() {
     try {
       // let res = await axios.get('/otp/gettotallotpsbyusername') 
       let res = await GetallOtpsAndUser()
-      console.log(res)
+      // console.log(res)
       if(res ){
         setOtpData(res)
        
@@ -29,7 +29,7 @@ function Charts() {
       [value.ref]: (acc[value.ref] || 0) + 1
    }), {});
   //  usersetOtpData(filterData)
-   console.log(filterData)
+  //  console.log(filterData)
 //    var convert  = Object.keys(filterData).map(function(key)  
 //   {  
 //    return [key, filterData[key]];  
