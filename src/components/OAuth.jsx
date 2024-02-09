@@ -35,7 +35,7 @@ function OAuth() {
                 })
             })
             const data = await res.json()
-            console.log(data)
+            // console.log(data)
             let subject ={subject:'Login your account'}
            
                 if(data.email){

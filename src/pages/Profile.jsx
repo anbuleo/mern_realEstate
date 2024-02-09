@@ -35,6 +35,7 @@ const [fileUploadError, setFileUploadError]=useState(false)
 const [formData, setFormData] = useState({})
 const [updateSuccess, setUpdateSuccess] = useState(false);
 const [userListing, setUserListing] = useState([])
+const fileRef = useRef(null);
 // console.log(userListing)
 let dispatch = useDispatch()
 
@@ -122,7 +123,7 @@ let dispatch = useDispatch()
       });
       
       const data = await res.json();
-      console.log(data)
+      // console.log(data)
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
         toast.error(error.message)
@@ -170,7 +171,7 @@ let dispatch = useDispatch()
       try {
         let res = await fetch(`/api/user/listing/${currentUser._id}`)
         const data = await res.json()
-        console.log(data)
+        // console.log(data)
         setUserListing(data)
         if(data.status ===200){
           toast.success('User List data fetched successfully')
@@ -185,7 +186,7 @@ let dispatch = useDispatch()
       }
   }
   let deleteListing = async(id) => {
-    console.log(id)
+    // console.log(id)
     try {
       let res = await fetch(`api/listing/deletelist/${id}`,{
         method : 'DELETE'
@@ -216,7 +217,7 @@ let dispatch = useDispatch()
     <div className="p-3 max-w-lg mx-auto">
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>  
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <input onChange={(e)=>setFile(e.target.files[0])} type="file" accept="image/*" hidden  />
+        <input onChange={(e)=>setFile(e.target.files[0])} ref={fileRef} type="file" accept="image/*" hidden  />
         <img onClick={()=>fileRef.current.click()} src={formData.avatar || currentUser.avatar} alt="profile" loading="lazy" className="rounded-full h-24 w-24 object-cover self-center mt-2"/>
         <p className="text-center text-sm">
           {fileUploadError ? (<span className="text-red-700">Error image Upload (image must be 2 mb)</span>): filePercentage >0 && filePercentage <100 ?(<span className="text-slate-700">{`Uploading ${filePercentage}%`}</span>) : filePercentage === 100 ? (<span className="text-green-700"> Image successfully Uploaded</span>) : '' }

@@ -19,13 +19,13 @@ export const getUser = async({username})=>{
 
 export async function generateOTP(username,{subject},values){
    
-    console.log(username)
+    // console.log(username)
    
     // console.log(otpVlaues)
     try {
         
         const res  = await axios.get('/otp/genrateotp', { params : { username }});
-        console.log(res.data.code,res)
+        // console.log(res.data.code,res)
         
         // const {data , status } = await axios.get('/user/genrateotp', { params : { username }});
       
@@ -57,7 +57,7 @@ export async function generateOTP(username,{subject},values){
 
 export async function verifyOTP({  code }){
     
-    console.log( code)
+    // console.log( code)
 
     try {
        const  { data, status } = await axios.get('/otp/verifyotp', { params : {  code }})

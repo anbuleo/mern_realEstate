@@ -24,7 +24,7 @@ function Contact({listing}) {
             }
         }
         fetchOwner()
-        console.log(listing)
+        // console.log(listing)
     },[listing.userRef])
   return (
    <>

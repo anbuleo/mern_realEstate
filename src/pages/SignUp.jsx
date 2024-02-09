@@ -19,7 +19,7 @@ function SignUp() {
   
 
  const handleAddUser = async(values)=>{
-  console.log(values)
+  // console.log(values)
   try {
     const res = await fetch('/api/auth/signup',{
       method:'post',
@@ -29,13 +29,13 @@ function SignUp() {
       body: JSON.stringify(values)
     })
     // const data = await res.json()
-    console.log(res.status)
+    // console.log(res.status)
     let username = values.username
     let subject ={subject:'Signup your account'}
     if(res.status===201)
     {
      let user = await getUser({username})
-     console.log(user)
+    //  console.log(user)
     let otpVlaues = {
       email:user.data.email,
       message:'',

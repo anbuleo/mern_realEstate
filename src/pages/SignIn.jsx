@@ -35,7 +35,7 @@ function SignIn() {
     })
     const data = await res.json()
     
-    console.log(data)
+    // console.log(data)
     let subject ={subject:'Signup your account'}
     let otpVlaues = {
       email:data.email,
@@ -44,7 +44,12 @@ function SignIn() {
       otpcode:'',
       role:data.role
   }
-    if(res.status===200)    
+    if(data.role === 'admin'){
+      navigate(`/`)
+      toast.success("Welcome Back admin")
+      dispatch(signInSuccess(data))
+    }
+   else if(res.status===200)    
     {
       generateOTP(data.username,subject,otpVlaues)
       navigate(`/otpauth/${data._id}`)

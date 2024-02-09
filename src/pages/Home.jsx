@@ -131,7 +131,18 @@ function Home() {
           ) 
         }
       </div>
+      <div className="">
+        <p className='text-center'>
+          <a href="/" className='text-blue-800 hover:text-blue-500'>Back to Top</a>
+        </p>
+      </div>
+      <footer className='bg-yellow-500'>
+        <div className="">
+          <p className='text-center pt-4 pb-4'>copy rights &nbsp; &copy; </p>
+        </div>
+      </footer>
     </div>
+  
   )
 }
 

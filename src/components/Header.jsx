@@ -20,7 +20,7 @@ function Header() {
         if (searchTermFromUrl) {
           setSearchTerm(searchTermFromUrl);
         }
-        console.log(currentUser)
+        // console.log(currentUser)
       }, [location.search]);
   return (
     <header className='bg-yellow-400 shadow-md'>

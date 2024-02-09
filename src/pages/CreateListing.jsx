@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 function CreateListing() {
     const { currentUser } = useSelector((state) => state.user);
-
+// console.log(currentUser)
   const navigate = useNavigate();
    let [files, setFiles] = useState([])
    let [formData, setFormData] = useState({
@@ -153,7 +153,7 @@ let handleSave = async (e) => {
             setError(data.message);
             toast.error('Error occured')
           }
-          console.log(data,typeof(data))
+        //   console.log(data,typeof(data))
           navigate(`/listing/${data.listing._id}`);
 
 

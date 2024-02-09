@@ -66,7 +66,7 @@ function Charts() {
   return (
     <div className='w-screen'>
       <h1 className='text-center p-5 text-2xl text-yellow-600 '>OTP generated chart</h1>
-   {da &&  <div className='flex  justify-around'>
+   {da &&  <div className='flex flex-col sm:flex-row gap-4  justify-around'>
       <div className="piechart">
         
       <PieChart width={400} height={400}>

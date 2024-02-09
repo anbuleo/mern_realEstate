@@ -26,7 +26,7 @@ function OtpAuth() {
           try {
             let { status } = await verifyOTP({ code : otp })
             let res =await axios.get(`/otp/getuser/${params.id}`)
-            console.log(res)
+            // console.log(res)
             if(res.data){
               dispatch(signInSuccess(res.data))
             }
@@ -48,7 +48,7 @@ function OtpAuth() {
        }
     },[otp])
  
-        console.log(otp,params.id)
+        // console.log(otp,params.id)
         let subject ={subject:'resend otp'} 
    const resendOtp = async() =>{
       try {
