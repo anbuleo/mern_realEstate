@@ -72,3 +72,22 @@ export async function verifyOTP({  code }){
         return Promise.reject(error);
     }
 }
+
+export const GetallOtpsAndUser = async ()=>{
+    try {
+        const res = await axios.get('/otp/getalluserotp')
+       
+        return res.data.user
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getAlluser = async()=>{
+    try {
+        const res = await axios.get('/otp/gettotallotpsbyusername')
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}

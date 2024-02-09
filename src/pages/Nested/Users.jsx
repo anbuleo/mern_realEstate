@@ -9,6 +9,7 @@ function Users() {
         let res = await axios.get('/otp/getalluserotp')
         toast.success(res.data.message)
         // let data =await res.json()
+        console.log(res.data.user)
         setOtpdata(res.data.user)
         // console.log((otpData[0].createdAt).split('T'))
       } catch (error) {
