@@ -13,11 +13,16 @@ function Otp() {
 
   let fetchData = async()=>{
     try {
+      let res1 = await axios.get('/otp/getalluserotp')
       let res = await axios.get('/otp/gettotallotpsbyusername')
       // console.log(res.data)
+     
       if(res.data.user){
+        setTableData(res1.data.user)
         setUserData(res.data.user)
+        
       }
+      
     } catch (error) {
       toast.error('error occured')
       // console.log(error)
@@ -57,7 +62,7 @@ function Otp() {
       <div className="inputotp mb-4">
         <form >
         <label className='' for="username">Choose Username: &nbsp;</label>
-        <select  className='' name="username" id="username" onChange={changeValue}>
+        <select  className=''  name="username" id="username" onChange={changeValue}>
           {
             userData && userData.map((e,i)=>{
               return <option key={i} value={e._id}>{e.username}</option>
@@ -74,7 +79,7 @@ function Otp() {
             <th scope="col" className="px-6 py-3">User ID</th>
             <th scope="col" className="px-6 py-3">Role</th>
             <th scope="col" className="px-6 py-3">Email</th>
-            <th scope="col" className="px-6 py-3">Code</th>
+            <th scope="col" className="px-6 py-3">Otp</th>
             <th scope="col" className="px-6 py-3">Created At</th>
             
           </tr>

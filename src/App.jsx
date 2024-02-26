@@ -17,6 +17,9 @@ import Charts from './pages/Nested/Charts'
 import Otp from './pages/Nested/Otp'
 import Users from './pages/Nested/Users'
 import OtpAuth from './pages/OtpAuth'
+import MeetingContext from './context/MeetingContext'
+import Meeting from './pages/Nested/Meeting'
+import MeetingTable from './pages/Nested/MeetingTable'
 
 function App() {
   return  <BrowserRouter>
@@ -36,8 +39,10 @@ function App() {
               <Route path='/update-listing/:listingId' element={<UpadateListing/>} />
               <Route path='/adminlog' element={<AdminLog />}>
                   <Route path='otp' element={<Otp/>}/>
-                  <Route path='users' element={<Users/>}/>
-                  <Route path='charts' element={<Charts/>}/>
+                  <Route path='users' element={<MeetingContext><Users/></MeetingContext>}/>
+                  <Route path='' element={<Charts/>}/>
+                  <Route path='meetingtable' element={<MeetingTable/>}/>
+                  <Route path='users/meeting' element={<MeetingContext><Meeting/></MeetingContext>} />
               </Route>
               <Route  />
               </Route>
