@@ -7,6 +7,7 @@ import {toast} from 'react-toastify'
 import OAuth from '../components/OAuth'
 import { generateOTP } from '../common/common'
 import {getUser} from '../common/common.js'
+import axios from 'axios'
 function SignUp() {
   let url = import.meta.env.VITE_API_URL
  let navigate = useNavigate()
@@ -21,11 +22,8 @@ function SignUp() {
  const handleAddUser = async(values)=>{
   // console.log(values)
   try {
-    const res = await fetch(`${url}/auth/signup`,{
-      method:'post',
-      headers: {
-        'content-type' : 'application/json',
-      },
+    const res = await axios.post(`${url}/auth/signup`,{
+    
       body: JSON.stringify(values)
     })
     // const data = await res.json()
