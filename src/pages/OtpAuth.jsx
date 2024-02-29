@@ -63,6 +63,7 @@ function OtpAuth() {
         // console.log(`${data.username},${subject},${otpVlaues}`)
       //  generateOTP(data.username,subject,otpVlaues)
           generateOTP(res.data.username,subject,otpVlaues)
+          toast.success('OTP resend to email')
         }
       } catch (error) {
         console.log(error)

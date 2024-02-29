@@ -60,7 +60,7 @@ function Users() {
     }
    ;
     useEffect(()=>{
-      console.log(inputData,meetingData)
+      // console.log(inputData,meetingData)
     },[inputData],[trigger])
     
      

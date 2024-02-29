@@ -22,7 +22,6 @@ function SignUp() {
   // console.log(values)
   try {
     const res = await fetch(`${url}/auth/signup`,{
-    
       method:'post',
       headers: {
         'content-type' : 'application/json',
