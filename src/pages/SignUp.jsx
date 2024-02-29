@@ -22,7 +22,7 @@ function SignUp() {
   // console.log(values)
   try {
     const res = await fetch(`${url}/auth/signup`,{
-      mode:'no-cors',
+    
       method:'post',
       headers: {
         'content-type' : 'application/json',
