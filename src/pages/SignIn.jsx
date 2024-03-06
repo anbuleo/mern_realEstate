@@ -28,6 +28,7 @@ let url = import.meta.env.VITE_API_URL
     dispatch(signInStart())
     const res = await fetch(`${url}/auth/signin`,{
       method:'post',
+      mode:'no-cors',
       headers: {
         'content-type' : 'application/json',
       },
