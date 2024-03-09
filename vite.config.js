@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   server : {
     proxy : {
-      '/api' : 'https://leo-estate-backend.onrender.com'
+      '/api' : 'https://leo-estate-backend.onrender.com',
+      secure: false,
     }
   },
   plugins: [react()],

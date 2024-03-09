@@ -169,7 +169,7 @@ let dispatch = useDispatch()
 
   let handleShowListings = async()=>{
       try {
-        let res = await fetch(`${url}/user/listing/${currentUser._id}`,{mode:'no-cors'})
+        let res = await fetch(`${url}/user/listing/${currentUser._id}`)
         const data = await res.json()
         // console.log(data)
         setUserListing(data)
