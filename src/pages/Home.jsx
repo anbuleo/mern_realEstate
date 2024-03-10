@@ -68,8 +68,8 @@ function Home() {
       {/*   swiper  */}
       <Swiper navigation>
       {
-        offerListings && offerListings.length > 0 && offerListings.map((lst)=>(
-          <SwiperSlide>
+        offerListings && offerListings.length > 0 && offerListings.map((lst,i)=>(
+          <SwiperSlide key={i}>
             <div style={{background: `url(${lst.imageUrls[0]}) center no-repeat` ,backgroundSize:'cover'}} className="h-[500px]" key={lst._id}>
 
             </div>

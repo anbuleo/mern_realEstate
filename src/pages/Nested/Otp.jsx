@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Error from '../../components/Error'
 
 
 let URL = import.meta.env.VITE_API_URL
@@ -10,9 +11,14 @@ axios.defaults.baseURL = URL
 function Otp() {
   let [userData,setUserData] = useState([])
   let [tableData,setTableData] = useState([])
+  let [loading,setLoading] =useState(false)
+  let [errorPage,setErrorPage] =useState(false)
+  let [errormessage,setErrorMessage ] = useState("")
+  let [errorstatus,setErrorStatus ] = useState("")
 
   let fetchData = async()=>{
     try {
+      setLoading(true)
       let res1 = await axios.get('/otp/getalluserotp')
       let res = await axios.get('/otp/gettotallotpsbyusername')
       // console.log(res.data)
@@ -25,7 +31,12 @@ function Otp() {
       
     } catch (error) {
       toast.error('error occured')
+      setErrorMessage(error.message ||'Error Occured')
+      setErrorStatus(error.name ||error.code)
+      setErrorPage(true)
       // console.log(error)
+    } finally{
+      setTimeout(()=>{setLoading(false)},2000)
     }
   }
   
@@ -52,12 +63,14 @@ function Otp() {
       
     } catch (error) {
       toast.error('Error occurs')
+      setErrorPage(true)
       // console.log(error)
     }
     // console.log(e.target.value)
   }
   return (
-    <div className='p-4'>
+    <>
+    {errorPage?<Error status={errorstatus} message={errormessage} />:loading ?<div className=' flex justify-center content-center h-80 '><span className="loading loading-spinner loading-lg text-warning"></span></div>:<div className='overflow-x-auto'>
       <p className='text-yellow-700 text-2xl text-center w-screen p-4'>OTP List By Username</p>
       <div className="inputotp mb-4">
         <form >
@@ -116,7 +129,8 @@ function Otp() {
         </tbody>
       </table>
       </div>
-    </div>
+    </div>}
+    </>
   )
 }
 

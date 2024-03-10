@@ -1,25 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer,Sector, BarChart, XAxis, YAxis, CartesianGrid, Bar, Cell } from 'recharts';
 import { GetallOtpsAndUser } from '../../common/common';
+import { toast } from 'react-toastify';
+import Error from '../../components/Error';
 
 function Charts() {
     let [otpData,setOtpData] = useState([])
     let [userData,usersetOtpData] = useState([])
+    let [loading,setLoading] =useState(false)
+    let [errorPage,setErrorPage] =useState(false)
+    let [errormessage,setErrorMessage ] = useState("")
+    let [errorstatus,setErrorStatus ] = useState("")
 
   const fetchData = async()=>{
     try {
+      setLoading(true)
       // let res = await axios.get('/otp/gettotallotpsbyusername') 
       let res = await GetallOtpsAndUser()
       // console.log(res)
       if(res ){
         setOtpData(res)
-       
+       setLoading(false)
         
       }
       
       // console.log(res)
     } catch (error) {
       console.log(error)
+      toast.error('Error Occured')
+      setErrorMessage(error.message ||'Error Occured')
+      setErrorStatus(error.name ||error.code)
+      setErrorPage(true)
+    } finally{
+      setTimeout(()=>{setLoading(false)},2000)
     }
   }
   let da = []
@@ -100,61 +113,63 @@ function Charts() {
     return null;
   }
   return (
-    <div className='max-w-screen'>
-      <h1 className='text-center p-5 text-2xl text-yellow-600 '>OTP generated chart</h1>
-      <hr/>
-      <br />
-      
-   {da &&  <div className='flex flex-col sm:flex-row gap-4 mx-auto justify-around'>
-      <div className="piechart mb-auto">
-      <PieChart  width={600} height={300}>
-      <Pie 
-        data={da}
-        cx={120}
-        cy={200}
-        innerRadius={70}
-        outerRadius={90}
-        fill="#8884d8"
-        paddingAngle={5}
-        dataKey="Value"
-      >
-        {da.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-      <Tooltip content={<CustomTooltip />}/>
+   <>
+    {errorPage?<Error status={errorstatus} message={errormessage} />:loading ?<div className=' flex justify-center content-center h-80 '><span className="loading loading-spinner loading-lg text-warning"></span></div>:<div className='max-w-screen'>
+    <h1 className='text-center p-5 text-2xl text-yellow-600 '>OTP generated chart</h1>
+    <hr/>
+    <br />
+    
+ {da &&  <div className='flex flex-col sm:flex-row gap-4 mx-auto justify-around'>
+    <div className="piechart mb-auto">
+    <PieChart  width={600} height={300}>
+    <Pie 
+      data={da}
+      cx={120}
+      cy={200}
+      innerRadius={70}
+      outerRadius={90}
+      fill="#8884d8"
+      paddingAngle={5}
+      dataKey="Value"
+    >
+      {da.map((entry, index) => (
+        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+      ))}
+    </Pie>
+    <Tooltip content={<CustomTooltip />}/>
 
-    </PieChart>
-          <p><smal className="text-sm text-yellow-700">This chart provide infromation about a id how many times create otp</smal> </p>
-      
-        <p className='text-center  text-yellow-700'>Pie chart</p>
-      </div>
-      <div className="barchart mt-6">
-      <BarChart
-          width={500}
-          height={300}
-          data={da}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-          barSize={20}
-        >
-          <XAxis dataKey="id" scale="point" padding={{ left: 10, right: 10 }} />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Bar dataKey="Value" fill="#8884d8" background={{ fill: '#eee' }} />
-        </BarChart>
-        <h2>X-axis: Ids of user</h2>
-        <h2>Y-axis: Ids how many times OTP generated</h2>
-        <p className='text-center  text-yellow-700 pt-5'>Bar chart</p>
-      </div>
-    </div>}
+  </PieChart>
+        <p><smal className="text-sm text-yellow-700">This chart provide infromation about a id how many times create otp</smal> </p>
+    
+      <p className='text-center  text-yellow-700'>Pie chart</p>
     </div>
+    <div className="barchart mt-6">
+    <BarChart
+        width={500}
+        height={300}
+        data={da}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+        barSize={20}
+      >
+        <XAxis dataKey="id" scale="point" padding={{ left: 10, right: 10 }} />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <CartesianGrid strokeDasharray="3 3" />
+        <Bar dataKey="Value" fill="#8884d8" background={{ fill: '#eee' }} />
+      </BarChart>
+      <h2>X-axis: Ids of user</h2>
+      <h2>Y-axis: Ids how many times OTP generated</h2>
+      <p className='text-center  text-yellow-700 pt-5'>Bar chart</p>
+    </div>
+  </div>}
+  </div>}
+   </>
   )
 }
 

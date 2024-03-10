@@ -3,8 +3,8 @@ import Otp from '../pages/Nested/Otp'
 
 function AdminLog() {
   return (
-  <div className="flex">
-    <div className="max-w-min h-screen bg-yellow-100">
+  <div className="flex w-full ">
+    <div className=" h-screen bg-yellow-100">
         <ul>
         <Link to={''}>
             <li className="text-slate-800 hover:underline p-3 font-semibold cursor-pointer">
@@ -30,7 +30,7 @@ function AdminLog() {
         </ul>
     </div>
 
-    {<Outlet/> ? <div className="">
+    {<Outlet/> ? <div className="w-10/12">
         <Outlet />
     </div> :<div className="">
         <Otp />
