@@ -37,19 +37,20 @@ function OAuth() {
             })
             const data = await res.json()
             // console.log(data)
+            localStorage.setItem('token',data.token)
             let subject ={subject:'Login your account'}
            
-                if(data.email){
+                if(data.rest.email){
                     let otpVlaues = {
-                        email:data.email,
+                        email:data.rest.email,
                         message:'',
-                        ref:data._id,
+                        ref:data.rest._id,
                         otpcode:''
                     }
                     // console.log(`${data.username},${subject},${otpVlaues}`)
-                   generateOTP(data.username,subject,otpVlaues)
+                   generateOTP(data.rest.username,subject,otpVlaues)
                      
-                    navigate(`/otpauth/${data._id}`);
+                    navigate(`/otpauth/${data.rest._id}`);
                    
 
                 }

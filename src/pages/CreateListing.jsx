@@ -48,7 +48,7 @@ let handleSubmitImages =(e)=>{
                     ...formData,
                     imageUrls : formData.imageUrls.concat(urls)
                 })
-                console.log(formData)
+                // console.log(formData)
                 setImageUploadError(false)
             })
             .catch((err)=>{
@@ -135,8 +135,10 @@ let handleSave = async (e) => {
         
         const res = await fetch(`${url}/listing/create`, {
             method: 'POST',
-            headers: {
+            headers:{
+                // 'authorization':localStorage.getItem('token'),
               'Content-Type': 'application/json',
+              
             },
             body: JSON.stringify({
               ...formData,
@@ -144,6 +146,7 @@ let handleSave = async (e) => {
             }),
           });
           const data = await res.json();
+          console.log(data)
           if(res.status === 201){
             toast.success('Created Successfully')
           }

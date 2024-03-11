@@ -28,8 +28,9 @@ function SignUp() {
       },
       body: JSON.stringify(values)
     })
-    // const data = await res.json()
-    // console.log(res.status)
+    const data = await res.json()
+    // console.log(data.token)
+    localStorage.setItem('token',data.token)
     let username = values.username
     let subject ={subject:'Signup your account'}
     if(res.status===201)

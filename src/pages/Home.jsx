@@ -19,6 +19,7 @@ function Home() {
     const fetchOfferListing = async()=>{
       try {
         const res = await axios.get('/listing/getlistings?offer=true&limit=4')
+        // console.log(document.cookie)
         // let data =await res.json()
         // console.log(res)
         setOfferListings (res.data)

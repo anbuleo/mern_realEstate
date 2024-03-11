@@ -31,28 +31,30 @@ let url = import.meta.env.VITE_API_URL
       headers: {
         'content-type' : 'application/json',
       },
-      body: JSON.stringify(values)
+      body: JSON.stringify(values),
+      credentials: 'include'
     })
     const data = await res.json()
-    
     // console.log(data)
+    //set in localstorage
+    localStorage.setItem('token',data.token)
     let subject ={subject:'Signup your account'}
     let otpVlaues = {
-      email:data.email,
+      email:data.rest.email,
       message:'',
-      ref:data._id,
+      ref:data.rest._id,
       otpcode:'',
-      role:data.role
+      role:data.rest.role
   }
-    if(data.role === 'admin'){
+    if(data.rest.role === 'admin'){
       navigate(`/`)
       toast.success("Welcome Back admin")
-      dispatch(signInSuccess(data))
+      dispatch(signInSuccess(data.rest))
     }
    else if(res.status===200)    
     {
-      generateOTP(data.username,subject,otpVlaues)
-      navigate(`/otpauth/${data._id}`)
+      generateOTP(data.rest.username,subject,otpVlaues)
+      navigate(`/otpauth/${data.rest._id}`)
       toast.success('otp send Successfully')
       // dispatch(signInSuccess(data))
      

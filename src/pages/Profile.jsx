@@ -119,9 +119,10 @@ let dispatch = useDispatch()
     try {
       dispatch(deleteUserStart());
       const res = await fetch(`${url}/user/delete/${currentUser._id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers:{authorization:localStorage.getItem('token')}
       });
-      
+     
       const data = await res.json();
       // console.log(data)
       if (data.success === false) {
@@ -133,6 +134,7 @@ let dispatch = useDispatch()
       
       
       dispatch(deleteUserSuccess(data));
+      localStorage.removeItem('token')
         toast.success(' Account Deleted success')
       
       
@@ -145,6 +147,7 @@ let dispatch = useDispatch()
     try {
       dispatch(signOutUserStart())
       const res = await fetch(`${url}/auth/signout`)
+      localStorage.removeItem('token')
       const data = await res.json()
 
       if(data.success === false){
@@ -168,10 +171,15 @@ let dispatch = useDispatch()
   // request.resource.contentType.matches('image/.*')
 
   let handleShowListings = async()=>{
+    let token = localStorage.getItem('token')
       try {
-        let res = await fetch(`${url}/user/listing/${currentUser._id}`)
+        let res = await fetch(`${url}/user/listing/${currentUser._id}`,{
+          method: 'GET',
+          credentials:'include',
+          headers:{authorization:token}
+        })
         const data = await res.json()
-        // console.log(data)
+      //  console.log(data)
         setUserListing(data)
         if(data.status ===200){
           toast.success('User List data fetched successfully')
@@ -189,7 +197,8 @@ let dispatch = useDispatch()
     // console.log(id)
     try {
       let res = await fetch(`${url}/listing/deletelist/${id}`,{
-        method : 'DELETE'
+        method : 'DELETE',
+        headers:{authorization:localStorage.getItem('token')}
       })
       const data = await res.json()
     

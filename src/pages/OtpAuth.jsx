@@ -25,7 +25,7 @@ function OtpAuth() {
         
           try {
             let { status } = await verifyOTP({ code : otp })
-            let res =await axios.get(`/otp/getuser/${params.id}`)
+            let res =await axios.get(`/otp/getuser/${params.id}`,{headers:{authorization:localStorage.getItem('token')}})
             // console.log(res)
             if(res.data){
               dispatch(signInSuccess(res.data))
@@ -37,7 +37,8 @@ function OtpAuth() {
               navigate('/')
             }
           } catch (error) {
-            console.log(error)
+            toast.error(error.message)
+            // console.log(error)
           }
         
      
